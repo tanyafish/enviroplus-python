@@ -19,7 +19,7 @@ If that is right, it means we're *below* sea level! Although the local shopping 
 #### Fixing the reading
 
 There is a bit in the library for the sensor that sets a base pressure level to compare against. When pilots fly, they can input the base level to their systems so that the altimeter (height display) is right. 
-As you can imagine, it's very important for pilots! The base level is called the QNH. It doesn't actually stand for anything, it's from when morse code was used over the radio, and it was quick to send!
+As you can imagine, it's very important for pilots. The base level is called the QNH. It doesn't actually stand for anything, it's from when morse code was used over the radio, and it was quick to send.
 Some people remember it as Query - Not Here! because it changes depending on where you are in the world.
 
 The software has the QNH set at 1013.25.
@@ -47,4 +47,25 @@ The QNH is 1026, so all we have to do is change the line of code to:
         
 
 See if changing the QNH to match your area gives you a more accurate reading. And then go and fall down the rabbit hole of METAR forecasts.
+
+----
+#### What about that weird first reading?
+
+We're glad you asked. The first reading is always hugely too high up, and it is because the sensor does weird things when it wakes up. Like with someone who doesn't get started until the coffee kicks in, it's best to let it wake up slowly, so we're going to put in a little pause at the start (and an explanation of why we're waiting).
+
+After:
+
+        import short
+        import time
+        
+We need to wake up the sensor, tell people why we're waiting, and wait:
+
+        altitude = short.weather.get_altitude()
+        print("Just waking the sensor up... please hold!")
+        time.sleep (2)
+        
+Try running the program again and hopefully that silly first reading should disappear. Can you think of another way of ignoring the first reading?
+
+----
+
 
